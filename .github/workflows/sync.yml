@@ -1,0 +1,52 @@
+name: sync fork
+
+on:
+  push:
+  schedule:
+    - cron: '*/5 * * * *' # every 5 minutes
+  workflow_dispatch: # on button click
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: sealdice-core
+        uses: TobKed/github-forks-sync-action@master
+        with:
+          upstream_repository: sealdice/sealdice-core
+          target_repository: JustAnotherID/sealdice-core
+          upstream_branch: master
+          target_branch: master
+          force: true
+          tags: true
+          github_token: ${{ secrets.REPO_SYNC_TOKEN }}
+      - name: sealdice-ui
+        uses: TobKed/github-forks-sync-action@master
+        with:
+          upstream_repository: sealdice/sealdice-ui
+          target_repository: JustAnotherID/sealdice-ui
+          upstream_branch: master
+          target_branch: master
+          force: true
+          tags: true
+          github_token: ${{ secrets.REPO_SYNC_TOKEN }}
+      - name: sealdice-manual-next
+        uses: TobKed/github-forks-sync-action@master
+        with:
+          upstream_repository: sealdice/sealdice-manual-next
+          target_repository: JustAnotherID/sealdice-manual-next
+          upstream_branch: main
+          target_branch: main
+          force: true
+          tags: true
+          github_token: ${{ secrets.REPO_SYNC_TOKEN }}
+      - name: sealdice-build
+        uses: TobKed/github-forks-sync-action@master
+        with:
+          upstream_repository: sealdice/sealdice-build
+          target_repository: JustAnotherID/sealdice-build
+          upstream_branch: dev
+          target_branch: dev
+          force: true
+          tags: true
+          github_token: ${{ secrets.REPO_SYNC_TOKEN }}
